@@ -19,6 +19,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { ProductFilters } from "@/components/product-filters"
+import { Value } from "@radix-ui/react-select"
 
 const sortOptions = [
   { name: "Newest", value: "/?date=desc" },
@@ -27,13 +28,21 @@ const sortOptions = [
 ]
 
 export function ProductSort() {
+  const router = useRouter()
   return (
     <div className="flex items-center">
-      <Select>
+      <Select onValueChange={Value => router.replace(Value)}>
         <SelectTrigger className="sm:w-[180px]">
           <SelectValue placeholder="Sort By" />
         </SelectTrigger>
-        <SelectContent>Sort Options</SelectContent>
+        <SelectContent>
+          {sortOptions.map(Option => (
+            <SelectItem key={Option.name} value={Option.value}>
+              {Option.name}
+
+            </SelectItem>
+          ))}
+        </SelectContent>
       </Select>
       <Sheet>
         <SheetContent className="w-[300px]">
